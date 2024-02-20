@@ -54,19 +54,9 @@ After making your config changes, please run tests to make sure clustering setup
 
 To test that your configuration changes don't impact entrypoint and clustering setup, please run:
 
-
-1. Run tests for the clustered couchdb nodes scenario
-
 ```bash
- docker-compose -f couchdb/test.couchdb-cluster.yml  build
- docker-compose -f couchdb/test.couchdb-cluster.yml  run  sut
-
-```
-
-2. Tear down test containers
-
-```bash
- docker-compose -f couchdb/test.couchdb-cluster.yml down
+cd couchdb/tests
+make test
 ```
 
 To create more tests, add them couchdb/tests/tests.bats

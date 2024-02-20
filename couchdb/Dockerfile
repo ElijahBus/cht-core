@@ -8,7 +8,6 @@ COPY docker-entrypoint.sh /usr/local/bin
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 
 COPY --chown=couchdb:couchdb set-up-cluster.sh /opt/couchdb/etc/set-up-cluster.sh
-RUN chmod +x /opt/couchdb/etc/set-up-cluster.sh
 
 RUN apt install -y apt-transport-https gnupg
 #RUN curl https://couchdb.apache.org/repo/keys.asc | gpg --dearmor | tee /usr/share/keyrings/couchdb-archive-keyring.gpg >/dev/null 2>&1
@@ -26,7 +25,7 @@ CMD ["/opt/couchdb/bin/couchdb"]
 
 # Test build
 FROM ghcr.io/ffurrer2/bats:1.6.0 as test_couchdb_build
-RUN apk --no-cache add curl
+RUN apk --no-cache add curl jq
 ENTRYPOINT [ "/bin/bash", "/app/tests.sh" ]
 
 # Final
