@@ -46,7 +46,7 @@ check_if_couchdb_is_ready() {
 	if [ "$#" -lt 1 ]; then
 		echo "Please provide a couchdb url end point" >&2
 		exit 1
-fi
+	fi
 
 	COUCHDB_URL=$1
 	wait_count=0
