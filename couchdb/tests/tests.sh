@@ -8,8 +8,6 @@ check_if_couchdb_cluster_is_ready() {
 	wait_count=0
 	until /app/set-up-cluster.sh verify_membership; do
 		echo "Waiting for cht couchdb cluster to be set up" >&2
-		curl -s -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$SVC_NAME:5984/_cluster_setup" ||:
-		curl -s -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$SVC_NAME:5984/_membership" ||:
 		wait_count=$((wait_count + 1))
 		if [[ "$wait_count" -gt $WAIT_THRESHOLD ]]; then
 			echo "Couchdb clustering failed" >&2
@@ -17,8 +15,6 @@ check_if_couchdb_cluster_is_ready() {
 		fi
 		sleep "$SLEEP_SECONDS"
 	done
-	curl -s -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$SVC_NAME:5984/_cluster_setup"
-	curl -s -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$SVC_NAME:5984/_membership"
 
 	echo "couchdb cluster is ready" >&2
 

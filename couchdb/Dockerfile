@@ -7,9 +7,9 @@ COPY --chown=couchdb:couchdb vm.args /opt/couchdb/etc/
 COPY docker-entrypoint.sh /usr/local/bin
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 
-COPY --chown=couchdb:couchdb set-up-cluster.sh /opt/couchdb/etc/set-up-cluster.sh
+COPY set-up-cluster.sh /opt/couchdb/etc/set-up-cluster.sh
 
-RUN apt install -y apt-transport-https gnupg
+#RUN apt install -y apt-transport-https gnupg
 #RUN curl https://couchdb.apache.org/repo/keys.asc | gpg --dearmor | tee /usr/share/keyrings/couchdb-archive-keyring.gpg >/dev/null 2>&1
 #RUN echo "deb https://apache.jfrog.io/artifactory/couchdb-deb/ bionic main" > /etc/apt/sources.list.d/couchdb.list
 #RUN cat /etc/apt/sources.list.d/couchdb.list
