@@ -23,4 +23,5 @@ jobs:
       - name: Test CouchDB
         run: |
           cd couchdb/tests
-          make tests    
+          make test
+
