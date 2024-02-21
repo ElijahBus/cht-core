@@ -35,7 +35,6 @@ setSecret() {
 		COUCHDB_SECRET=$(cat /proc/sys/kernel/random/uuid)
 	fi
 	# Set secret only if not already present
-	# if [ -z $(grep -Pzor "\[couch_httpd_auth\]\nsecret =" $CLUSTER_CREDENTIALS) ]; then
 	if ! grep -Pzq "\[couch_httpd_auth\]\nsecret =" "$CLUSTER_CREDENTIALS"; then
 		printf "\n[couch_httpd_auth]\nsecret = %s\n" "$COUCHDB_SECRET" >>$CLUSTER_CREDENTIALS
 	fi
@@ -46,7 +45,6 @@ setUuid() {
 		COUCHDB_UUID=$(cat /proc/sys/kernel/random/uuid)
 	fi
 	# Set uuid only if not already present
-	# if [ -z $(grep -Pzor "\[couchdb\]\nuuid =" $CLUSTER_CREDENTIALS) ]; then
 	if ! grep -Pzq "\[couchdb\]\nuuid =" "$CLUSTER_CREDENTIALS"; then
 		printf "\n[couchdb]\nuuid = %s\n" "$COUCHDB_UUID" >>$CLUSTER_CREDENTIALS
 	fi
@@ -112,7 +110,6 @@ if [ "$1" = '/opt/couchdb/bin/couchdb' ]; then
 		# Wait until couchdb1 node is ready and then retrieve salted password. We need to use same
 		# hashed password across all nodes so that session cookies can be reused.
 		/bin/bash /opt/couchdb/etc/set-up-cluster.sh check_if_couchdb_is_ready "http://$COUCHDB_SYNC_ADMINS_NODE:5984"
-		# COUCHDB_HASHED_PASSWORD=`curl http://$COUCHDB_USER:$COUCHDB_PASSWORD@$COUCHDB_SYNC_ADMINS_NODE:5984/_node/couchdb@$COUCHDB_SYNC_ADMINS_NODE/_config/admins/$COUCHDB_USER | sed "s/^\([\"]\)\(.*\)\1\$/\2/g"`
 		COUCHDB_HASHED_PASSWORD=$(curl -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$COUCHDB_SYNC_ADMINS_NODE:5984/_node/couchdb@$COUCHDB_SYNC_ADMINS_NODE/_config/admins/$COUCHDB_USER" | sed "s/^\([\"]\)\(.*\)\1\$/\2/g")
 
 		if ! grep -Pzq "$COUCHDB_USER = $COUCHDB_HASHED_PASSWORD" $CLUSTER_CREDENTIALS; then
