@@ -59,4 +59,4 @@ cd couchdb/tests
 make test
 ```
 
-To create more tests, add them couchdb/tests/tests.bats
+To create more tests, add them `couchdb/tests/tests.bats`
