@@ -1,0 +1,20 @@
+on:
+  pull_request:
+    paths:
+      - 'couchdb/**'
+  push:
+    branches:
+      - main
+      - master
+      - dn/*
+    paths:
+      - 'couchdb/**'
+
+jobs:
+  test:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        sparse-checkout: |
+          couchdb
+    
