@@ -1,7 +1,4 @@
 version: "3.7"
-networks:
-  cht-net-test:
-    driver: bridge
 
 services:
   couchdb.1:
@@ -15,9 +12,6 @@ services:
       - "COUCHDB_UUID=${COUCHDB_UUID:-5c265815-b9e3-47f1-ba8d-c1d50495eeb2}"
       - "SVC_NAME=couchdb.1"
       - "CLUSTER_PEER_IPS=couchdb.2,couchdb.3"
-    restart: always
-    networks:
-      cht-net-test:
 
   couchdb.2:
     build:
@@ -30,9 +24,6 @@ services:
       - "COUCHDB_UUID=${COUCHDB_UUID:-5c265815-b9e3-47f1-ba8d-c1d50495eeb2}"
       - "SVC_NAME=couchdb.2"
       - "COUCHDB_SYNC_ADMINS_NODE=${COUCHDB_SYNC_ADMINS_NODE:-couchdb.1}"
-    restart: always
-    networks:
-      cht-net-test:
 
   couchdb.3:
     build:
@@ -45,9 +36,6 @@ services:
       - "COUCHDB_UUID=${COUCHDB_UUID:-5c265815-b9e3-47f1-ba8d-c1d50495eeb2}"
       - "SVC_NAME=couchdb.3"
       - "COUCHDB_SYNC_ADMINS_NODE=${COUCHDB_SYNC_ADMINS_NODE:-couchdb.1}"
-    restart: always
-    networks:
-      cht-net-test:
 
   sut:
     depends_on:
@@ -66,5 +54,3 @@ services:
       - "COUCHDB_USER=${COUCHDB_USER:-admin}"
       - "COUCHDB_PASSWORD=${COUCHDB_PASSWORD}"
       - "SVC_NAME=couchdb.1"
-    networks:
-      cht-net-test:

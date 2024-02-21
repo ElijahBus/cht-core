@@ -150,10 +150,10 @@ def helm_install_or_upgrade(c, f, namespace, values, image_tag): # NOSONAR
     release_exists = subprocess.run(["helm", "list", "-n", namespace], capture_output=True, text=True).stdout
     if project_name in release_exists:
         print("Release exists. Performing upgrade.")
-        subprocess.run(["helm", "upgrade", "--install", project_name, os.path.join(script_dir, "helm", chart_filename), "--namespace", namespace, "--values", f, "--set", f"cht_image_tag={image_tag}"], check=True)
+        subprocess.run(["echo", "helm", "upgrade", "--dry-run", "--install", project_name, os.path.join(script_dir, "helm", chart_filename), "--namespace", namespace, "--values", f, "--set", f"cht_image_tag={image_tag}"], check=True)
     else:
         print("Release does not exist. Performing install.")
-        subprocess.run(["helm", "install", project_name, os.path.join(script_dir, "helm", chart_filename), "--namespace", namespace, "--values", f, "--set", f"cht_image_tag={image_tag}"], check=True)
+        subprocess.run(["echo", "helm", "install", "--dry-run", project_name, os.path.join(script_dir, "helm", chart_filename), "--namespace", namespace, "--values", f, "--set", f"cht_image_tag={image_tag}"], check=True)
 
 @task
 def install(c, f):
