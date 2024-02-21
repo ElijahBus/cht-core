@@ -113,7 +113,10 @@ if [ "$1" = '/opt/couchdb/bin/couchdb' ]; then
 		COUCHDB_HASHED_PASSWORD=$(curl -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$COUCHDB_SYNC_ADMINS_NODE:5984/_node/couchdb@$COUCHDB_SYNC_ADMINS_NODE/_config/admins/$COUCHDB_USER" | sed "s/^\([\"]\)\(.*\)\$/\2/g")
 
 		if ! grep -Pzoqr "$COUCHDB_USER = $COUCHDB_HASHED_PASSWORD" "$CLUSTER_CREDENTIALS"; then
+			echo "ADDING"
 			printf "[admins]\n%s = %s\n" "$COUCHDB_USER" "$COUCHDB_HASHED_PASSWORD" >>"$CLUSTER_CREDENTIALS"
+		else
+			echo "NOT ADDING"
 		fi
 
 		COUCHDB_SECRET=$(curl -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$COUCHDB_SYNC_ADMINS_NODE:5984/_node/couchdb@$COUCHDB_SYNC_ADMINS_NODE/_config/couch_httpd_auth/secret" | sed "s/^\([\"]\)\(.*\)\$/\2/g")

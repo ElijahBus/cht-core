@@ -9,4 +9,4 @@ test:
 	docker compose down
 
 clean:
-	docker compose down --rmi local
+	docker compose down --rmi local || :

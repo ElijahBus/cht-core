@@ -39,7 +39,7 @@ complete_cluster_setup() {
 }
 
 check_cluster_membership() {
-	curl -fs -m5 -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$SVC_NAME:5984/_membership"
+	curl -s -m5 -u "$COUCHDB_USER:$COUCHDB_PASSWORD" "http://$SVC_NAME:5984/_membership"
 }
 
 check_if_couchdb_is_ready() {
